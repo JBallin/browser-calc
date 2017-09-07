@@ -1,6 +1,6 @@
-# jQuery Calculator
+# Browser Calculator
 
-Use jQuery to build a basic calculator using the provided HTML and CSS.
+Use DOM Manipulation to build a basic calculator using the provided HTML and CSS.
 
 ![Example](screenshots/example.gif)
 
@@ -30,12 +30,3 @@ Enhance the calculator so users can input arithmetic expressions using their key
 - Press the `Escape` key to clear the screen.
 
 **TIP:** You'll have to change the `screen` to an `<input>` tag.
-
-## Deployment
-
-Review the following articles on the Surge platform and then deploy your website to production.
-
-- [Getting started with Surge](http://surge.sh/help/getting-started-with-surge)
-- [Remembering a domain](http://surge.sh/help/remembering-a-domain)
-
-A good domain name for this project is `USERNAME-jquery-calculator.surge.sh` where `USERNAME` is your GitHub username in all **lowercase** letters. Once deployed and everything works as you expect, copy your Surge URL and paste it at the top of your GitHub repository's page.
