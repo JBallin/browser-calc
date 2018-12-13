@@ -3,43 +3,47 @@ window.onload = () => {
   const displayScreen = document.querySelector('#screen');
   let wasPrevEquals = false;
 
-  buttons.onclick = buttonsOnClick;
+  buttons.onclick = handleButtonsClick;
 
-  function buttonsOnClick(e) {
+  function handleButtonsClick(e) {
     const input = e.target.innerHTML;
+    if (input === 'C') clearScreen();
+    else if (input.length !== 1 || displayScreen.value === 'ERROR') return;
+    else if (input === '=') calculateScreen();
+    else if (operators.includes(input)) addOperator(input);
+    else if (wasPrevEquals) overwriteScreen(input);
+    else addToScreen(input);
+  }
 
-    if (input === 'C') {
-      displayScreen.value = '';
-      wasPrevEquals = false;
-      return;
-    }
-
-    if (input === '=') {
-      const calculation = displayScreen.value;
-      displayScreen.value = calculateString(calculation);
-      wasPrevEquals = true;
-      return;
-    }
-
-    if (input.length !== 1 || displayScreen.value === 'ERROR') return;
-
-    if (operators.includes(input)) {
-      const prevInput = displayScreen.value.slice(-1);
-      if (isNaN(prevInput)) {
-        displayScreen.value = 'ERROR';
-        return;
-      } else {
-        displayScreen.value += input;
-      }
-      wasPrevEquals = false;
-      return;
-    }
-
-    if (wasPrevEquals) {
-      displayScreen.value = input;
-      wasPrevEquals = false;
-    } else {
-      displayScreen.value += input;
-    }
+  function clearScreen() {
+    displayScreen.value = '';
+    wasPrevEquals = false;
   };
+
+  function calculateScreen() {
+    const calculation = displayScreen.value;
+    displayScreen.value = calculateString(calculation);
+    wasPrevEquals = true;
+  }
+
+  function addOperator(input) {
+    const prevInput = displayScreen.value.slice(-1);
+    if (isNaN(prevInput)) showError();
+    else addToScreen(input);
+    wasPrevEquals = false;
+  }
+
+  function overwriteScreen(input) {
+    displayScreen.value = input;
+    wasPrevEquals = false;
+  }
+
+  function addToScreen(input) {
+    displayScreen.value += input;
+    wasPrevEquals = false;
+  }
+
+  function showError() {
+    displayScreen.value = 'ERROR';
+  }
 }
