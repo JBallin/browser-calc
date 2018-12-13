@@ -66,7 +66,8 @@ const addAndSubtract = (calcArray) => calcArray.reduce((res, e, i, a) => {
 }, []);
 
 const calculateString = (s) => {
-  const calcArray = getCalcArray(s);
+  const withoutSpaces = s.replace(/\s+/g, '');
+  const calcArray = getCalcArray(withoutSpaces);
   const multipliedAndDivided = multiplyAndDivide(calcArray);
   const addedAndSubtracted = addAndSubtract(multipliedAndDivided);
   return Number(addedAndSubtracted[0]);
