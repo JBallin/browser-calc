@@ -1,8 +1,8 @@
 const operatorMethodMapping = {
-  '÷': (x, y) => String(x / y),
-  'x': (x, y) => String(x * y),
-  '+': (x, y) => String(x + y),
-  '-': (x, y) => String(x - y),
+  '÷': (x, y) => String(Number(x) / Number(y)),
+  'x': (x, y) => String(Number(x) * Number(y)),
+  '+': (x, y) => String(Number(x) + Number(y)),
+  '-': (x, y) => String(Number(x) - Number(y)),
 };
 
 const operators = ['÷', 'x', '+', '-'];
@@ -41,8 +41,22 @@ const multiplyAndDivide = (calcArray) => calcArray.reduce((res, e, i, a) => {
   return res.concat(e);
 }, []);
 
+const addAndSubtract = (calcArray) => calcArray.reduce((res, e, i, a) => {
+  const prevE = a[i - 1];
+  if (['+', '-'].includes(prevE)) {
+    const num1 = res[res.length - 2] || a[i - 2];
+    const num2 = e;
+    const operation = operatorMethodMapping[prevE];
+    const calculated = operation(num1, num2);
+    return res.slice(0, res.length - 2).concat(calculated);
+  }
+  return res.concat(e);
+}, []);
+
 const calculateString = (s) => {
   const calcArray = getCalcArray(s);
   const multipliedAndDivided = multiplyAndDivide(calcArray);
-  return multipliedAndDivided;
+  const addedAndSubtracted = addAndSubtract(multipliedAndDivided);
+  return Number(addedAndSubtracted[0]);
 }
+
