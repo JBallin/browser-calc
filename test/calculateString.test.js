@@ -20,6 +20,12 @@ describe('calculateString', () => {
   it('should support decimals', () => {
     assert.equal(calcStr('.2x4'), .8);
   });
+  it('should support *', () => {
+    assert.equal(calcStr('2*4'), 8);
+  });
+  it('should support /', () => {
+    assert.equal(calcStr('2/4'), .5);
+  });
   it('should properly calculate a long operation', () => {
     assert.equal(calcStr('4÷2+3x4-10÷2+7-2'), 14);
   });

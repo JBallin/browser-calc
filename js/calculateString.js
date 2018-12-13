@@ -1,11 +1,13 @@
 const operatorMethodMapping = {
   '÷': (x, y) => String(Number(x) / Number(y)),
+  '/': (x, y) => String(Number(x) / Number(y)),
   'x': (x, y) => String(Number(x) * Number(y)),
+  '*': (x, y) => String(Number(x) * Number(y)),
   '+': (x, y) => String(Number(x) + Number(y)),
   '-': (x, y) => String(Number(x) - Number(y)),
 };
 
-const operators = ['÷', 'x', '+', '-'];
+const operators = ['÷', 'x', '+', '-', '*', '/'];
 
 const isNumber = s => !isNaN(s) || s === '.';
 const isOperator = s => operators.includes(s);
@@ -31,7 +33,7 @@ const getCalcArray = (str) => {
 
 const multiplyAndDivide = (calcArray) => calcArray.reduce((res, e, i, a) => {
   const prevE = a[i - 1];
-  if (['x', '÷'].includes(prevE)) {
+  if (['x', '÷', '*', '/'].includes(prevE)) {
     const num1 = res[res.length - 2] || a[i - 2];
     const num2 = e;
     const operation = operatorMethodMapping[prevE];
