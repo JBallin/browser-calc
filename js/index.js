@@ -6,9 +6,29 @@ window.onload = () => {
 
   function buttonsOnClick(e) {
     const input = e.target.innerHTML;
+    const operatorMapping = {
+      '÷': '/',
+      'x': '*',
+    };
+    const operatorMethodMapping = {
+      '÷': (x, y) => x / y,
+      'x': (x, y) => x * y,
+      '+': (x, y) => x + y,
+      '-': (x, y) => x - y,
+    }
 
     if (input === 'C') {
       displayScreen.innerHTML = '';
+      return;
+    }
+
+    if (input === '=') {
+      console.log('equals');
+      const calculation = displayScreen.innerHTML;
+      const parsedCalc = Object.keys(operatorMapping).reduce((parsed, operator) => {
+        return parsed.replace(operator, operatorMapping[operator]);
+      }, calculation);
+      displayScreen.innerHTML = eval(parsedCalc);
       return;
     }
 
