@@ -60,3 +60,4 @@ const calculateString = (s) => {
   return Number(addedAndSubtracted[0]);
 }
 
+try { module.exports = calculateString; } catch(e) {};
