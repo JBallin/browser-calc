@@ -8,6 +8,12 @@ body {
   width: 100%;
 }
 
+h1 {
+  text-align: center;
+  margin-bottom: 40px;
+  font-family: Courier;
+}
+
 #calculator {
   background: #2B3D50;
   border-radius: 20px;
@@ -59,7 +65,7 @@ body {
 
 .l-row {
   position: absolute;
-  top: 354px;
+  top: 452px;
 }
 
 .buttons {
@@ -89,4 +95,8 @@ body {
 
 .operator {
   font-size: 1.3em;
+}
+
+footer {
+  text-align: center;
 }
