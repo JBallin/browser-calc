@@ -7,16 +7,6 @@ window.onload = () => {
 
   function buttonsOnClick(e) {
     const input = e.target.innerHTML;
-    const operatorMapping = {
-      '÷': '/',
-      'x': '*',
-    };
-    const operatorMethodMapping = {
-      '÷': (x, y) => x / y,
-      'x': (x, y) => x * y,
-      '+': (x, y) => x + y,
-      '-': (x, y) => x - y,
-    }
 
     if (input === 'C') {
       displayScreen.value = '';
@@ -33,7 +23,7 @@ window.onload = () => {
 
     if (input.length !== 1 || displayScreen.value === 'ERROR') return;
 
-    if (input in operatorMethodMapping) {
+    if (operators.includes(input)) {
       const prevInput = displayScreen.value.slice(-1);
       if (isNaN(prevInput)) {
         displayScreen.value = 'ERROR';
