@@ -11,6 +11,7 @@ const operators = ['÷', 'x', '+', '-', '*', '/'];
 
 const isNumber = s => !isNaN(s) || s === '.';
 const isOperator = s => operators.includes(s);
+const getLastElem = a => a[a.length - 1];
 
 const getCalcArray = (str) => {
   const calculationArray = [];
@@ -21,10 +22,19 @@ const getCalcArray = (str) => {
     if (isNumber(e)) {
       curr += e;
     } else if (isOperator(e)) {
-      if (!curr) throw Error('two subsequent operators');
-      calculationArray.push(curr);
-      calculationArray.push(e);
-      curr = '';
+      const prev = getLastElem(calculationArray);
+      const wasPrevOperator = operators.includes(prev);
+      const isMinus = e === '-';
+      const isCurrNegative = curr == '-';
+      if (!curr && wasPrevOperator && !isMinus || isCurrNegative) {
+        throw Error('two subsequent operators');
+      } else if (!curr && isMinus) {
+        curr += '-'
+      } else {
+        calculationArray.push(curr);
+        calculationArray.push(e);
+        curr = '';
+      }
     }
   });
   calculationArray.push(curr);
