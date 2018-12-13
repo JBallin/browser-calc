@@ -2,24 +2,26 @@ window.onload = () => {
   const buttons = document.querySelector('.buttons');
   const displayScreen = document.querySelector('#screen');
 
-  buttons.onclick = buttonOnclick;
+  buttons.onclick = buttonsOnClick;
 
-  function buttonOnclick(e) {
+  function buttonsOnClick(e) {
     const value = e.target.innerHTML;
-    if (value.length !== 1) return;
 
     if (value === 'C') {
       displayScreen.innerHTML = '';
-    } else if (isNaN(value)) {
-      if (value in operatorMapping) {
-        if(isNaN(displayScreen.innerHTML.slice(-1))) {
-          displayScreen.innerHTML = 'ERROR';
-        } else {
-          displayScreen.innerHTML += value;
-        }
-      }
-    } else {
-      displayScreen.innerHTML += value;
+      return;
     }
+
+    if (value.length !== 1 || displayScreen.innerHTML === 'ERROR') return;
+
+    if (value in operatorMapping) {
+      const prevInput = displayScreen.innerHTML.slice(-1);
+      if (isNaN(prevInput)) {
+        displayScreen.innerHTML = 'ERROR';
+        return;
+      }
+    }
+
+    displayScreen.innerHTML += value;
   };
 }
