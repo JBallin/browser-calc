@@ -5,16 +5,16 @@ window.onload = () => {
   buttons.onclick = buttonsOnClick;
 
   function buttonsOnClick(e) {
-    const value = e.target.innerHTML;
+    const input = e.target.innerHTML;
 
-    if (value === 'C') {
+    if (input === 'C') {
       displayScreen.innerHTML = '';
       return;
     }
 
-    if (value.length !== 1 || displayScreen.innerHTML === 'ERROR') return;
+    if (input.length !== 1 || displayScreen.innerHTML === 'ERROR') return;
 
-    if (value in operatorMapping) {
+    if (input in operatorMethodMapping) {
       const prevInput = displayScreen.innerHTML.slice(-1);
       if (isNaN(prevInput)) {
         displayScreen.innerHTML = 'ERROR';
@@ -22,6 +22,6 @@ window.onload = () => {
       }
     }
 
-    displayScreen.innerHTML += value;
+    displayScreen.innerHTML += input;
   };
 }
