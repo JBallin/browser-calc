@@ -6,6 +6,14 @@ window.onload = () => {
 
   buttons.onclick = handleButtonsClick;
   screenForm.onsubmit = handleScreenFormSubmit;
+  displayScreen.oninput = handleScreenOnInput;
+
+  function handleScreenOnInput(e) {
+    const lastInput = e.target.value.slice(-1);
+    if (isNaN(lastInput) && !operators.includes(lastInput) && !['.', ' '].includes(lastInput)) {
+      clearScreen();
+    }
+  }
 
   function handleScreenFormSubmit(e) {
     e.preventDefault();
