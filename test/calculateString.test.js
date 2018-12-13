@@ -17,6 +17,9 @@ describe('calculateString', () => {
   it('should subtract', () => {
     assert.equal(calcStr('2-4'), -2);
   });
+  it('should support multiple digits', () => {
+    assert.equal(calcStr('100 - 70'), 30);
+  });
   it('should support decimals', () => {
     assert.equal(calcStr('.2x4'), .8);
   });
@@ -28,6 +31,15 @@ describe('calculateString', () => {
   });
   it('should support extra spacing', () => {
     assert.equal(calcStr('2      / 4'), .5);
+  });
+  it('should support extra spacing with decimals', () => {
+    assert.equal(calcStr('2      /  .  4'), 5);
+  });
+  it('should support negative numbers', () => {
+    assert.equal(calcStr('2*-4'), -8);
+  });
+  it('should error with two negative signs', () => {
+    assert.throws(() => calcStr('2*--4'), 'two subsequent operators');
   });
   it('should error with two subsequent operators', () => {
     assert.throws(() => calcStr('2xx4'), 'two subsequent operators');
