@@ -1,9 +1,21 @@
 window.onload = () => {
   const buttons = document.querySelector('.buttons');
   const displayScreen = document.querySelector('#screen');
+  const screenForm = document.querySelector('#screen-form');
   let wasPrevEquals = false;
 
   buttons.onclick = handleButtonsClick;
+  screenForm.onsubmit = handleScreenFormSubmit;
+
+  function handleScreenFormSubmit(e) {
+    e.preventDefault();
+    const input = e.target.screen.value;
+    try {
+      calculateScreen();
+    } catch (e) {
+      showError();
+    }
+  }
 
   function handleButtonsClick(e) {
     const input = e.target.innerHTML;
