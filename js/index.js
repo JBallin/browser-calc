@@ -26,10 +26,7 @@ window.onload = () => {
 
     if (input === '=') {
       const calculation = displayScreen.innerHTML;
-      const parsedCalc = Object.keys(operatorMapping).reduce((parsed, operator) => {
-        return parsed.replace(new RegExp(operator, 'g'), operatorMapping[operator]);
-      }, calculation);
-      displayScreen.innerHTML = eval(parsedCalc);
+      displayScreen.innerHTML = calculateString(calculation);
       wasPrevEquals = true;
       return;
     }
