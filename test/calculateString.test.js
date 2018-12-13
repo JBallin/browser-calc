@@ -26,6 +26,12 @@ describe('calculateString', () => {
   it('should support /', () => {
     assert.equal(calcStr('2/4'), .5);
   });
+  it('should support extra spacing', () => {
+    assert.equal(calcStr('2      / 4'), .5);
+  });
+  it('should error with two subsequent operators', () => {
+    assert.throws(() => calcStr('2xx4'), 'two subsequent operators');
+  });
   it('should properly calculate a long operation', () => {
     assert.equal(calcStr('4÷2+3x4-10÷2+7-2'), 14);
   });
