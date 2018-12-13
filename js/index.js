@@ -19,37 +19,37 @@ window.onload = () => {
     }
 
     if (input === 'C') {
-      displayScreen.innerHTML = '';
+      displayScreen.value = '';
       wasPrevEquals = false;
       return;
     }
 
     if (input === '=') {
-      const calculation = displayScreen.innerHTML;
-      displayScreen.innerHTML = calculateString(calculation);
+      const calculation = displayScreen.value;
+      displayScreen.value = calculateString(calculation);
       wasPrevEquals = true;
       return;
     }
 
-    if (input.length !== 1 || displayScreen.innerHTML === 'ERROR') return;
+    if (input.length !== 1 || displayScreen.value === 'ERROR') return;
 
     if (input in operatorMethodMapping) {
-      const prevInput = displayScreen.innerHTML.slice(-1);
+      const prevInput = displayScreen.value.slice(-1);
       if (isNaN(prevInput)) {
-        displayScreen.innerHTML = 'ERROR';
+        displayScreen.value = 'ERROR';
         return;
       } else {
-        displayScreen.innerHTML += input;
+        displayScreen.value += input;
       }
       wasPrevEquals = false;
       return;
     }
 
     if (wasPrevEquals) {
-      displayScreen.innerHTML = input;
+      displayScreen.value = input;
       wasPrevEquals = false;
     } else {
-      displayScreen.innerHTML += input;
+      displayScreen.value += input;
     }
   };
 }
