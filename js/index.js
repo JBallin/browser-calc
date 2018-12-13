@@ -1,6 +1,7 @@
 window.onload = () => {
   const buttons = document.querySelector('.buttons');
   const displayScreen = document.querySelector('#screen');
+  let wasPrevEquals = false;
 
   buttons.onclick = buttonsOnClick;
 
@@ -19,16 +20,17 @@ window.onload = () => {
 
     if (input === 'C') {
       displayScreen.innerHTML = '';
+      wasPrevEquals = false;
       return;
     }
 
     if (input === '=') {
-      console.log('equals');
       const calculation = displayScreen.innerHTML;
       const parsedCalc = Object.keys(operatorMapping).reduce((parsed, operator) => {
         return parsed.replace(operator, operatorMapping[operator]);
       }, calculation);
       displayScreen.innerHTML = eval(parsedCalc);
+      wasPrevEquals = true;
       return;
     }
 
@@ -39,9 +41,18 @@ window.onload = () => {
       if (isNaN(prevInput)) {
         displayScreen.innerHTML = 'ERROR';
         return;
+      } else {
+        displayScreen.innerHTML += input;
       }
+      wasPrevEquals = false;
+      return;
     }
 
-    displayScreen.innerHTML += input;
+    if (wasPrevEquals) {
+      displayScreen.innerHTML = input;
+      wasPrevEquals = false;
+    } else {
+      displayScreen.innerHTML += input;
+    }
   };
 }
