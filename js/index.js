@@ -1,3 +1,5 @@
+/* eslint-disable no-use-before-define */
+
 window.onload = () => {
   const buttons = document.querySelector('.buttons');
   const displayScreen = document.querySelector('#screen');
@@ -35,11 +37,11 @@ window.onload = () => {
   /* HELPER FUNCTIONS */
 
   function isInvalidInput(input) {
-    return isNaN(input) && !isOperator(input) && !['.', ' '].includes(input);
+    return Number.isNaN(Number(input)) && !isOperator(input) && !['.', ' '].includes(input);
   }
 
   function isOperator(s) {
-    return operators.includes(s);
+    return operators.includes(s); // eslint-disable-line no-undef
   }
 
   function handleButtonsClick(e) {
@@ -49,15 +51,15 @@ window.onload = () => {
   function clearScreen() {
     displayScreen.value = '';
     wasPrevEquals = false;
-  };
+  }
 
   function calculateScreen() {
     if (displayScreen.value === 'ERROR') clearScreen();
     else if (displayScreen.value) {
       const calculation = displayScreen.value;
       try {
-        displayScreen.value = calculateString(calculation)
-        if (isNaN(displayScreen.value)) throw Error;
+        displayScreen.value = calculateString(calculation); // eslint-disable-line no-undef
+        if (Number.isNaN(Number(displayScreen.value))) throw Error;
       } catch (e) {
         showError();
       }
@@ -84,7 +86,8 @@ window.onload = () => {
     const isInitialInputInvalid = isFirstInputNonMinusOperator || isFirstTwoInputsMinus;
     const isLastTwoMinusFollowingOperator = isLastTwoMinus && isOperator(earlierInput);
     const isLastTwoOperatorsButInputNotMinus = isOperator(input) && input !== '-' && isOperator(prevInput);
-    return isInitialInputInvalid || isLastTwoMinusFollowingOperator || isLastTwoOperatorsButInputNotMinus;
+    return isInitialInputInvalid || isLastTwoMinusFollowingOperator
+    || isLastTwoOperatorsButInputNotMinus;
   }
 
   function overwriteScreen(input) {
@@ -108,5 +111,4 @@ window.onload = () => {
   function deleteLastChar() {
     displayScreen.value = displayScreen.value.slice(0, -1);
   }
-
-}
+};

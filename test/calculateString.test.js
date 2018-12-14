@@ -9,7 +9,7 @@ describe('calculateString', () => {
     assert.equal(calcStr('2x4'), 8);
   });
   it('should divide', () => {
-    assert.equal(calcStr('2÷4'), .5);
+    assert.equal(calcStr('2÷4'), 0.5);
   });
   it('should add', () => {
     assert.equal(calcStr('2+4'), 6);
@@ -21,16 +21,16 @@ describe('calculateString', () => {
     assert.equal(calcStr('100 - 70'), 30);
   });
   it('should support decimals', () => {
-    assert.equal(calcStr('.2x4'), .8);
+    assert.equal(calcStr('.2x4'), 0.8);
   });
   it('should support *', () => {
     assert.equal(calcStr('2*4'), 8);
   });
   it('should support /', () => {
-    assert.equal(calcStr('2/4'), .5);
+    assert.equal(calcStr('2/4'), 0.5);
   });
   it('should support extra spacing', () => {
-    assert.equal(calcStr('2      / 4'), .5);
+    assert.equal(calcStr('2      / 4'), 0.5);
   });
   it('should support extra spacing with decimals', () => {
     assert.equal(calcStr('2      /  .  4'), 5);
