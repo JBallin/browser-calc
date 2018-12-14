@@ -4,23 +4,36 @@ window.onload = () => {
   const screenForm = document.querySelector('#screen-form');
   let wasPrevEquals = false;
 
+  const isOperator = s => operators.includes(s);
+
   buttons.onclick = handleButtonsClick;
   screenForm.onsubmit = handleScreenFormSubmit;
-  displayScreen.oninput = handleScreenOnInput;
-
-  function handleScreenOnInput(e) {
-    const lastInput = e.target.value.slice(-1);
-    if (isNaN(lastInput) && !operators.includes(lastInput) && !['.', ' '].includes(lastInput)) {
-      clearScreen();
-    }
-  }
+  displayScreen.oninput = handleScreenInput;
 
   function handleScreenFormSubmit(e) {
     e.preventDefault();
     const input = e.target.screen.value;
-    try {
-      calculateScreen();
-    } catch (e) {
+    if (input === 'ERROR') clearScreen();
+    else {
+      try {
+        calculateScreen();
+        if (isNaN(displayScreen.value)) throw Error;
+      } catch (e) {
+        showError();
+      }
+    }
+  }
+
+  function handleScreenInput(e) {
+    const input = e.target.value.slice(-1);
+    const prevInput = e.target.value.slice(-2, -1);
+    const isInputInvalid = isNaN(input) && !isOperator(input) && !['.', ' '].includes(input);
+    if (input === '=') calculateScreen();
+    else if (!prevInput && isOperator(input) && input !== '-') showError();
+    else if (isInputInvalid) {
+      if (displayScreen.value.includes('E')) clearScreen()
+      else showError();
+    } else if (prevInput && isOperator(input) && wasGivenTwoOperators(input, prevInput)) {
       showError();
     }
   }
@@ -28,10 +41,10 @@ window.onload = () => {
   function handleButtonsClick(e) {
     const input = e.target.innerHTML;
     if (input === 'C') clearScreen();
-    else if (input.length !== 1 || displayScreen.value === 'ERROR') return;
+    else if (input.length !== 1) return;
     else if (input === '=') calculateScreen();
-    else if (operators.includes(input)) addOperator(input);
-    else if (wasPrevEquals) overwriteScreen(input);
+    else if (isOperator(input)) addOperator(input);
+    else if (wasPrevEquals || displayScreen.value === 'ERROR') overwriteScreen(input);
     else addToScreen(input);
   }
 
@@ -47,10 +60,14 @@ window.onload = () => {
   }
 
   function addOperator(input) {
-    const prevInput = displayScreen.value.slice(-1);
-    if (isNaN(prevInput)) showError();
+    if (wasGivenTwoOperators(input) || wasGivenOperatorFirst(input)) showError();
     else addToScreen(input);
     wasPrevEquals = false;
+  }
+
+  function wasGivenTwoOperators(input, prev) {
+    const prevInput = prev || displayScreen.value.slice(-1);
+    return isNaN(prevInput) && input !== '-' || prevInput == '-';
   }
 
   function overwriteScreen(input) {
@@ -66,4 +83,9 @@ window.onload = () => {
   function showError() {
     displayScreen.value = 'ERROR';
   }
+
+  function wasGivenOperatorFirst(input) {
+    return !displayScreen.value && isOperator(input) && input !== '-';
+  };
+
 }
