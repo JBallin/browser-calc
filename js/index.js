@@ -9,6 +9,15 @@ window.onload = () => {
   buttons.onclick = handleButtonsClick;
   screenForm.onsubmit = handleScreenFormSubmit;
   displayScreen.oninput = handleScreenInput;
+  document.onkeydown = handleDocKeyDown;
+
+  function handleDocKeyDown(e) {
+    if ((e.key) === 'Escape') {
+      clearScreen();
+    } else if (e.key === 'Enter') {
+      calculateScreen();
+    }
+  }
 
   function handleScreenFormSubmit(e) {
     e.preventDefault();
