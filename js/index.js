@@ -15,7 +15,7 @@ window.onload = () => {
     } else if (e.key === 'Enter') {
       calculateScreen();
     } else if (e.key === 'Backspace') {
-      if (displayScreen.value.includes('E')) clearScreen();
+      if (displayScreen.innerHTML.includes('E')) clearScreen();
       else deleteLastChar();
     } else {
       handleInput(e.key);
@@ -29,7 +29,7 @@ window.onload = () => {
     else if (input === '=') calculateScreen();
     else if (isOperator(input)) addOperator(input);
     else if (isInvalidInput(input)) showError();
-    else if (wasPrevEquals || displayScreen.value === 'ERROR') overwriteScreen(input);
+    else if (wasPrevEquals || displayScreen.innerHTML === 'ERROR') overwriteScreen(input);
     else addToScreen(input);
   }
 
@@ -49,17 +49,17 @@ window.onload = () => {
   }
 
   function clearScreen() {
-    displayScreen.value = '';
+    displayScreen.innerHTML = '';
     wasPrevEquals = false;
   }
 
   function calculateScreen() {
-    if (displayScreen.value === 'ERROR') clearScreen();
-    else if (displayScreen.value) {
-      const calculation = displayScreen.value;
+    if (displayScreen.innerHTML === 'ERROR') clearScreen();
+    else if (displayScreen.innerHTML) {
+      const calculation = displayScreen.innerHTML;
       try {
-        displayScreen.value = calculateString(calculation); // eslint-disable-line no-undef
-        if (Number.isNaN(Number(displayScreen.value))) throw Error;
+        displayScreen.innerHTML = calculateString(calculation); // eslint-disable-line no-undef
+        if (Number.isNaN(Number(displayScreen.innerHTML))) throw Error;
       } catch (e) {
         showError();
       }
@@ -69,13 +69,13 @@ window.onload = () => {
 
   function addOperator(input) {
     if (wasGivenTwoOperators(input) || wasGivenOperatorFirst(input)) showError();
-    else if (displayScreen.value === 'ERROR' && input === '-') overwriteScreen('-');
-    else if (displayScreen.value !== 'ERROR') addToScreen(input);
+    else if (displayScreen.innerHTML === 'ERROR' && input === '-') overwriteScreen('-');
+    else if (displayScreen.innerHTML !== 'ERROR') addToScreen(input);
     wasPrevEquals = false;
   }
 
   function wasGivenTwoOperators(input) {
-    const displayWithoutSpaces = displayScreen.value.replace(/\s+/g, '');
+    const displayWithoutSpaces = displayScreen.innerHTML.replace(/\s+/g, '');
     const prevInput = displayWithoutSpaces.slice(-1);
     const earlierInput = displayWithoutSpaces.slice(-2, -1);
     const isFirstInput = !prevInput;
@@ -91,24 +91,24 @@ window.onload = () => {
   }
 
   function overwriteScreen(input) {
-    displayScreen.value = input;
+    displayScreen.innerHTML = input;
     wasPrevEquals = false;
   }
 
   function addToScreen(input) {
-    displayScreen.value += input;
+    displayScreen.innerHTML += input;
     wasPrevEquals = false;
   }
 
   function showError() {
-    displayScreen.value = 'ERROR';
+    displayScreen.innerHTML = 'ERROR';
   }
 
   function wasGivenOperatorFirst(input) {
-    return !displayScreen.value && isOperator(input) && input !== '-';
+    return !displayScreen.innerHTML && isOperator(input) && input !== '-';
   }
 
   function deleteLastChar() {
-    displayScreen.value = displayScreen.value.slice(0, -1);
+    displayScreen.innerHTML = displayScreen.innerHTML.slice(0, -1);
   }
 };
