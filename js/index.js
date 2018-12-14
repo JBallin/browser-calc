@@ -26,15 +26,21 @@ window.onload = () => {
 
   function handleScreenInput(e) {
     const input = e.target.value.slice(-1);
-    const prevInput = e.target.value.slice(-2, -1);
+    const displayWithoutSpaces = displayScreen.value.replace(/\s+/g, '');
+    const prevInput = displayWithoutSpaces.slice(-2, -1);
+    const earlierInput = displayWithoutSpaces.slice(-3, -2);
     const isInputInvalid = isNaN(input) && !isOperator(input) && !['.', ' '].includes(input);
     if (input === '=') calculateScreen();
     else if (!prevInput && isOperator(input) && input !== '-') showError();
     else if (isInputInvalid) {
-      if (displayScreen.value.includes('E')) clearScreen()
+      if (displayScreen.value.includes('E')) clearScreen();
       else showError();
-    } else if (prevInput && isOperator(input) && wasGivenTwoOperators(input, prevInput)) {
+    } else if (prevInput && isOperator(input) && wasGivenTwoOperators(input, prevInput, earlierInput)) {
       showError();
+    } else if (wasPrevEquals && !isOperator(input) && input !== ' ') {
+      overwriteScreen(input);
+    } else {
+      wasPrevEquals = false;
     }
   }
 
@@ -61,13 +67,23 @@ window.onload = () => {
 
   function addOperator(input) {
     if (wasGivenTwoOperators(input) || wasGivenOperatorFirst(input)) showError();
-    else addToScreen(input);
+    else if (displayScreen.value !== 'ERROR') addToScreen(input);
     wasPrevEquals = false;
   }
 
-  function wasGivenTwoOperators(input, prev) {
-    const prevInput = prev || displayScreen.value.slice(-1);
-    return isNaN(prevInput) && input !== '-' || prevInput == '-';
+  function wasGivenTwoOperators(input, prev, earlier) {
+    const displayWithoutSpaces = displayScreen.value.replace(/\s+/g, '');
+    const prevInput = prev || displayWithoutSpaces.slice(-1);
+    const earlierInput = earlier || displayWithoutSpaces.slice(-2, -1);
+    const isFirstInput = !prevInput;
+    const isSecondInput = !earlierInput;
+    const isFirstInputNonMinusOperator = isFirstInput && isOperator(input) && input !== '-';
+    const isLastTwoMinus = prevInput === '-' && input === '-';
+    const isFirstTwoInputsMinus = isSecondInput && isLastTwoMinus;
+    const isInitialInputInvalid = isFirstInputNonMinusOperator || isFirstTwoInputsMinus;
+    const isLastTwoMinusFollowingOperator = isLastTwoMinus && isOperator(earlierInput);
+    const isLastTwoOperatorsButInputNotMinus = isOperator(input) && input !== '-' && isOperator(prevInput);
+    return isInitialInputInvalid || isLastTwoMinusFollowingOperator || isLastTwoOperatorsButInputNotMinus;
   }
 
   function overwriteScreen(input) {
