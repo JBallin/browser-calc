@@ -38,7 +38,10 @@ describe('calculateString', () => {
   it('should support negative numbers', () => {
     assert.equal(calcStr('2*-4'), -8);
   });
-  it('should error with two negative signs', () => {
+  it('should support subtracting negative numbers', () => {
+    assert.equal(calcStr('2 - -4'), 6);
+  });
+  it('should error with two negative signs after an operator', () => {
     assert.throws(() => calcStr('2*--4'), 'two subsequent operators');
   });
   it('should error with two subsequent operators', () => {
