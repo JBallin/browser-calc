@@ -10,6 +10,10 @@ window.onload = () => {
   document.onkeydown = handleDocKeyDown;
 
   function handleDocKeyDown(e) {
+    const operatorConversion = {
+      '*': 'x',
+      '/': '÷',
+    };
     if (e.key === 'Escape') {
       clearScreen();
     } else if (e.key === 'Enter') {
@@ -18,7 +22,7 @@ window.onload = () => {
       if (displayScreen.value.includes('E')) clearScreen();
       else deleteLastChar();
     } else {
-      handleInput(e.key);
+      handleInput(operatorConversion[e.key] || e.key);
     }
   }
 
