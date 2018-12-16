@@ -26,8 +26,7 @@ const getCalcArray = (str) => {
       const wasPrevOperator = operators.includes(prev);
       const isMinus = e === '-';
       const isCurrNegative = curr === '-';
-      // eslint-disable-next-line no-mixed-operators
-      if (!curr && wasPrevOperator && !isMinus || isCurrNegative) {
+      if ((!curr && wasPrevOperator && !isMinus) || isCurrNegative) {
         throw Error('two subsequent operators');
       } else if (!curr && isMinus) {
         curr += '-';
