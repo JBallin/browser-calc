@@ -33,7 +33,7 @@ window.onload = () => {
     else if (input === '=') calculateScreen();
     else if (isOperator(input)) addOperator(input);
     else if (isInvalidInput(input)) showError();
-    else if (wasPrevEquals || displayScreen.value === 'ERROR') overwriteScreen(input);
+    else if ((wasPrevEquals && input !== ' ') || displayScreen.value === 'ERROR') overwriteScreen(input);
     else addToScreen(input);
   }
 
