@@ -18,6 +18,14 @@ const getCalcArray = (str) => {
   let curr = '';
   const split = str.split('');
 
+  const [first, second] = [split[0], split[1]];
+  const isFirstNonMinusOperator = operators.includes(first) && first !== '-';
+  const isFirstTwoMinus = first === '-' && second === '-';
+
+  if (isFirstNonMinusOperator || isFirstTwoMinus) {
+    throw Error('expression begins with operator');
+  }
+
   split.forEach((e) => {
     if (isNumber(e)) {
       curr += e;
