@@ -47,6 +47,19 @@ describe('calculateString', () => {
   it('should error with two subsequent operators', () => {
     assert.throws(() => calcStr('2xx4'), 'two subsequent operators');
   });
+  it('should error when starting with an (non-minus) operator', () => {
+    assert.throws(() => calcStr('x42'), 'expression begins with operator');
+  });
+  it('should error when starting with two minus operators', () => {
+    assert.throws(() => calcStr('--42'), 'expression begins with operator');
+  });
+  it('should not error when starting with a negative number', () => {
+    assert.equal(calcStr('-1x42'), -42);
+  });
+  it('should properly handle division by 0', () => {
+    assert.isNaN(calcStr('0/0'));
+    assert.equal(calcStr('1/0'), Infinity);
+  });
   it('should properly calculate a long operation', () => {
     assert.equal(calcStr('4÷2+3x4-10÷2+7-2'), 14);
   });
