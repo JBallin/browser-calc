@@ -33,7 +33,7 @@ window.onload = () => {
     else if (input === '=') calculateScreen();
     else if (isOperator(input)) addOperator(input);
     else if (isInvalidInput(input)) showError();
-    else if ((wasPrevEquals && input !== ' ') || displayScreen.value === 'ERROR') overwriteScreen(input);
+    else if (wasPrevEquals || displayScreen.value === 'ERROR') overwriteScreen(input);
     else addToScreen(input);
   }
 
@@ -41,7 +41,7 @@ window.onload = () => {
   /* HELPER FUNCTIONS */
 
   function isInvalidInput(input) {
-    return Number.isNaN(Number(input)) && !isOperator(input) && !['.', ' '].includes(input);
+    return (Number.isNaN(Number(input)) || input === ' ') && !isOperator(input) && input !== '.';
   }
 
   function isOperator(s) {
