@@ -27,12 +27,11 @@ window.onload = () => {
   }
 
   function handleInput(input) {
-    if (input.length !== 1) return;
+    if (isInvalidInput(input)) return;
 
     if (input === 'C') clearScreen();
     else if (input === '=') calculateScreen();
     else if (isOperator(input)) addOperator(input);
-    else if (isInvalidInput(input)) showError();
     else if (wasPrevEquals || displayScreen.value === 'ERROR') overwriteScreen(input);
     else addToScreen(input);
   }
@@ -41,7 +40,8 @@ window.onload = () => {
   /* HELPER FUNCTIONS */
 
   function isInvalidInput(input) {
-    return (Number.isNaN(Number(input)) || input === ' ') && !isOperator(input) && input !== '.';
+    const whiteList = ['.', '=', 'C'];
+    return input.length !== 1 || ((Number.isNaN(Number(input)) || input === ' ') && !isOperator(input) && !whiteList.includes(input));
   }
 
   function isOperator(s) {
