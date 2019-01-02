@@ -2,9 +2,6 @@
 
 Simple calculator, built with vanilla JavaScript.
 
-![Error Example](screenshots/errorScreenshot.png)
-<br>
-<br>
 ![Example](screenshots/example.gif)
 
 ### Controls
@@ -24,7 +21,7 @@ Calculations can be completed by clicking the buttons or using the following key
 * Keyboard input
 * Supports decimals and negative numbers
 * Custom built calculation function with extensive testing
-* Extensive error handling
+* Extensive error handling (anything that would cause an error is disabled)
 
 ### Usage
 
