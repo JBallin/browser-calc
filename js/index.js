@@ -72,9 +72,23 @@ window.onload = () => {
   }
 
   function addOperator(input) {
-    if (wasGivenTwoOperators(input) || wasGivenOperatorFirst(input)) showError();
-    else if (displayScreen.value === 'ERROR' && input === '-') overwriteScreen('-');
-    else if (displayScreen.value !== 'ERROR') addToScreen(input);
+    if (wasGivenOperatorFirst(input)) {
+      wasPrevEquals = false;
+      return;
+    }
+
+    if (wasGivenTwoOperators(input)) {
+      const pastInput = displayScreen.value.slice(-2, -1);
+      const prevInput = displayScreen.value.slice(-1);
+      const lastTwoInputs = pastInput + prevInput;
+      let chopPoint = -1;
+      if ((lastTwoInputs === '--' && input !== '-') || (pastInput !== '-' && isOperator(pastInput) && prevInput === '-')) chopPoint = -2;
+      overwriteScreen(displayScreen.value.slice(0, chopPoint) + input);
+    } else if (displayScreen.value === 'ERROR' && input === '-') {
+      overwriteScreen('-');
+    } else if (displayScreen.value !== 'ERROR') {
+      addToScreen(input);
+    }
     wasPrevEquals = false;
   }
 
