@@ -1,6 +1,8 @@
 # Browser Calculator
 
-Simple calculator, built with vanilla JavaScript.
+*Simple calculator, built with vanilla JavaScript.*
+<br>
+[jballin.github.io/browser-calc](https://jballin.github.io/browser-calc)
 
 ![Example](screenshots/example.gif)
 
