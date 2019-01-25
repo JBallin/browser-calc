@@ -10,6 +10,7 @@
 
 Calculations can be completed by clicking the buttons or using the following keys:
 
+* `0-9`: numbers
 * `esc`: clear
 * `enter`: equals
 * `backspace`: delete
